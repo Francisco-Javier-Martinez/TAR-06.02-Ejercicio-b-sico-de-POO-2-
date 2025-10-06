@@ -27,26 +27,18 @@
         //sacar los dias del mes
         private function diasMes($mes,$ano){
             foreach($this->arrayMeses as $valor){
+                //Comprobar si el mes es febrero y si el año es bisiesto
                 if($mes==$valor['numeroMes']){
-                    //Comprobar si es febrero y si el año es bisiesto
-                    if($mes==2){
-                        //Comprobar si es bisiesto
-                        $bisi= $this->bisiesto($ano);
-                        //Si es bisiesto cambiar los dias del mes a 29
-                        if($bisi==true){
-                            $valor['diasMes']=29;
-                            return $valor['diasMes'];
-                        }else{
-                            return $valor['diasMes'];
-                        }
-                    }else{
+                    if($mes==2 && $this->operacionBisiesto($ano)){ //Si es febrero y el año es bisiesto
+                        $valor['diasMes']=29; //Cambio los dias de febrero a 29
                         return $valor['diasMes'];
                     }
+                    return $valor['diasMes'];
                 }
             }
         }
         //Comprobar si el año es bisiesto
-        private function bisiesto($ano){
+        private function operacionBisiesto($ano){
             if(($ano % 4 == 0 && $ano % 100 != 0) || ($ano % 400 == 0)){
                 return true;
             }else{
@@ -55,10 +47,10 @@
         }
 
         //Mostrar la fecha escrita y los dias del mes
-        public function monstrarFechaEscrita($dia,$mes,$ano){
-            $diasFebrero= $this->diasMes(2,$ano); //Dias de febrero del año introducido
-            return $dia .'/' .$this->sacarNombre($mes). '/' .$ano. ' este mes tiene '. $this->diasMes($mes,$ano). ' dias <br> Dias de febrero: '.$diasFebrero ;
+        public function monstrarFechaEscrita($fecha){
+            $trozo= explode('-',$fecha); //separo la fecha en 3 partes mediante el - porque el formato es aaaa-mm-dd
+            $diasFebrero= $this->diasMes(2,$trozo[0]); //Dias de febrero del año introducido
+            return $trozo[2] .'/' .$this->sacarNombre($trozo[1]). '/' .$trozo[0]. ' este mes tiene '. $this->diasMes($trozo[1],$trozo[0]). ' dias <br> Dias de febrero: '.$diasFebrero ;
         }
-
     }
 ?>
