@@ -3,7 +3,7 @@
 
     $fecha=$_GET['fecha'];
     $validar= new ValidarFecha();
-
+    //https://www.php.net/manual/es/function.explode.php informacion sacada de aqui
     $trozo= explode('-',$fecha); //separo la fecha en 3 partes mediante el - porque el formato es aaaa-mm-dd
     //valido que el array tenga 3 partes
     if(count($trozo)==3){
@@ -14,4 +14,5 @@
         }else{
             echo "formato incorecto";
         }
+
 ?>
