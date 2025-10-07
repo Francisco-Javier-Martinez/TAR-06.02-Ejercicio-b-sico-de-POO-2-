@@ -16,9 +16,16 @@
             ["numeroMes"=>11, "nombreMes"=>"Noviembre", "diasMes"=>30],
             ["numeroMes"=>12, "nombreMes"=>"Diciembre", "diasMes"=>31]
         ];
-        
+        private $anioActual; //año actual
+        private $fechaEntera = '';
+       
+        //constructor para inicializar el año actual
+        public function __construct(){
+            $this->anioActual= date('Y'); //año actual
+        }
+
         //funcion que devuelve el nombre del mes
-        private function saberMes($mes){
+        private function nombreMes($mes){
             foreach($this->arrayMeses as $valor){
                 if($mes==$valor['numeroMes']){
                     return $valor['nombreMes'];               
@@ -45,12 +52,11 @@
             }else{
                 return '<a href="formu.html">Formato incorrecto o caracter incorrecto. Volver</a>';
             }
-            $anioActual= date('Y'); //año actual
             //compruebo que el mes, dia y año sean correctos
             if($mes<1 || $mes>12){
                 return '<a href="formu.html">Mes no existente. Volver</a>';
             }
-            if($ano<=1950 || $ano>$anioActual){
+            if($ano<=1950 || $ano>$this->anioActual){
                 return '<a href="formu.html">Año erróneo. Volver</a>';
             }
             //modifico los dias de febrero si es bisiesto
@@ -61,10 +67,10 @@
             }
 
             //si todo es correcto concateno la fecha en una variable con el formato dia/mes/año
-            $fechaEntera = $dia .'/' .$this->saberMes($mes). '/' .$ano;
+            $this->fechaEntera = $dia .'/' .$this->nombreMes($mes). '/' .$ano;
 
             //si todo es correcto devuelvo la fecha con el nombre del mes y los dias que tiene
-            return $fechaEntera. ' <br> Este mes tiene '. $this->arrayMeses[$mes-1]['diasMes']. ' dias <br> Dias de febrero: '.$this->arrayMeses[1]["diasMes"];
+            return $this->fechaEntera. ' <br> Este mes tiene '. $this->arrayMeses[$mes-1]['diasMes']. ' dias <br> Dias de febrero: '.$this->arrayMeses[1]["diasMes"];
         }
 
     }
